@@ -36,7 +36,7 @@
 |**KeepAliveTimeout**|_uint32_|_The time to keep the request alive._|
 |**SslCertFile**|_string_|_is the path and file name of a certificate file, relative to the directory that contains the node's executable files._|
 |**SslCertPassword**|_string_|_is the password required to access the X.509 certificate data._|
-|**TrustedAuthorities**|_string_|_Tumbprints of the of the last certificate authority in the chain._|
+|**TrustedAuthorities**|_StringArray_|_Tumbprints of the of the last certificate authority in the chain._|
 |**EnableBasicAuthentication**|_boolean_|_enables basic authentication._|
 |**RestUser**|_string_|_Basic authentication's username._|
 |**RestPass**|_string_|_Basic authentication's password._|
