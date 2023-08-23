@@ -19,7 +19,6 @@ namespace Neo.Plugins.DummyPlugin.Controllers
         }
 
         // example: http://127.0.0.1:10339/api/v1/contract/0xfffdc93764dbaddd97c48f252a53ea4643faa3fd/sayHello
-        // example: http://127.0.0.1:10339/api/v1/contract/NgiALPHzer4fMTBdkMvNVwHA4ApA5dp554/sayHello
         [HttpGet("contract/{hash:required}/sayHello", Name = "GetSayHello")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
