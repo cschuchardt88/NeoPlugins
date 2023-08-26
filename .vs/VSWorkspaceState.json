@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\DummyPlugin"
   ],
+  "SelectedNode": "\\DummyPlugin\\zDummyPlugin.csproj",
   "PreviewInSolutionExplorer": false
 }
