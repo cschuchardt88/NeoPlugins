@@ -11,6 +11,8 @@ namespace Neo.Plugins.DummyPlugin.Controllers
     [Route("/api/v1")]
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(EmptyErrorModel))]
+    [ApiExplorerSettings(GroupName = "v1")]
     [ApiController]
     public class DummyController : ControllerBase
     {
@@ -30,7 +32,6 @@ namespace Neo.Plugins.DummyPlugin.Controllers
         /// <response code="400">If anything is invalid or request crashes.</response>
         [HttpGet("contract/{hash:required}/sayHello", Name = "GetSayHello")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(EmptyErrorModel))]
         public IActionResult GetSayHello(
             [FromRoute(Name = "hash")]
             UInt160 scripthash)
@@ -47,7 +48,6 @@ namespace Neo.Plugins.DummyPlugin.Controllers
         /// <response code="400">If anything is invalid or request crashes.</response>
         [HttpGet("ledger/block/{hash:required}", Name = "GetBlockByHash")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Block))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(EmptyErrorModel))]
         public IActionResult GetBlockByHash(
             [FromRoute(Name = "hash")]
             UInt256 blockhash)
