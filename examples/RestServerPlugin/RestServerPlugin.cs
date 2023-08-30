@@ -14,7 +14,7 @@ namespace Neo.Plugins.Example
 
         protected override void Configure()
         {
-            
+
         }
 
         protected override void OnSystemLoaded(NeoSystem system)

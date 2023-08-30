@@ -1,4 +1,4 @@
-﻿namespace Neo.Plugins.Example.Models
+namespace Neo.Plugins.Example.Models
 {
     internal class ErrorModel
     {

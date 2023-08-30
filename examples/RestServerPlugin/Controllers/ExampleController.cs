@@ -36,7 +36,7 @@ namespace Neo.Plugins.Example.Controllers
             [FromRoute(Name = "hash")]
             UInt160 scripthash)
         {
-            return Ok($"Hello, {scripthash}"); 
+            return Ok($"Hello, {scripthash}");
         }
 
         /// <summary>
