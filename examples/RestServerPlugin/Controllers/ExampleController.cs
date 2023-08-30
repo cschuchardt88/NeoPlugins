@@ -30,7 +30,7 @@ namespace Neo.Plugins.Example.Controllers
         /// <returns>string</returns>
         /// <response code="200">Successful</response>
         /// <response code="400">An error occurred. See Response for details.</response> <!--This line is key to what the users see's as an error message dont change it-->
-        [HttpGet("contract/{hash:required}/sayHello", Name = "GetSayHello")] // <-- Name is the name of the method for Swagger or Open API client to generate. Note that path parameters are the same name for Swagger methods.
+        [HttpGet("contracts/{hash:required}/sayHello", Name = "GetSayHello")] // <-- Name is the name of the method for Swagger or Open API client to generate. Note that path parameters are the same name for Swagger methods.
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))] // <-- Must put this on each controller method you have. So Swagger knows the default return type model.
         public IActionResult GetSayHello( // <-- You dont have to use IActionResult you can just return the type you would like. I like doing it this way so I am able to throw other responses.
             [FromRoute(Name = "hash")]
