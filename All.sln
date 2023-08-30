@@ -5,6 +5,12 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestServer", "src\RestServer\RestServer.csproj", "{3BFEFE99-1C5E-4750-97D5-AE5F908FA96B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{68F1E9F0-21B8-4D5C-A57C-1DCEA8510CD6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{485BB16C-03C8-417E-A53D-5537AD0F8409}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestServerPlugin", "examples\RestServerPlugin\RestServerPlugin.csproj", "{F04186DE-CC37-4566-8B00-2F11A4D7549B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +21,17 @@ Global
 		{3BFEFE99-1C5E-4750-97D5-AE5F908FA96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BFEFE99-1C5E-4750-97D5-AE5F908FA96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BFEFE99-1C5E-4750-97D5-AE5F908FA96B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F04186DE-CC37-4566-8B00-2F11A4D7549B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F04186DE-CC37-4566-8B00-2F11A4D7549B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F04186DE-CC37-4566-8B00-2F11A4D7549B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F04186DE-CC37-4566-8B00-2F11A4D7549B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3BFEFE99-1C5E-4750-97D5-AE5F908FA96B} = {68F1E9F0-21B8-4D5C-A57C-1DCEA8510CD6}
+		{F04186DE-CC37-4566-8B00-2F11A4D7549B} = {485BB16C-03C8-417E-A53D-5537AD0F8409}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2AAC08D-C3E1-47A5-B5FA-4EB57D1DA8BC}
