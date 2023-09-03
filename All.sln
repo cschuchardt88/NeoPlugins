@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{F6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestServerPlugin", "examples\RestServerPlugin\RestServerPlugin.csproj", "{B1BC954A-55C2-4FF7-AC1F-6C954CEFC7EB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestServer.Tests", "tests\RestServer.Tests\RestServer.Tests.csproj", "{333E0796-0838-4438-9C05-11E9733A85D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B1BC954A-55C2-4FF7-AC1F-6C954CEFC7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1BC954A-55C2-4FF7-AC1F-6C954CEFC7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1BC954A-55C2-4FF7-AC1F-6C954CEFC7EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{333E0796-0838-4438-9C05-11E9733A85D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{333E0796-0838-4438-9C05-11E9733A85D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{333E0796-0838-4438-9C05-11E9733A85D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{333E0796-0838-4438-9C05-11E9733A85D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -34,6 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3BFEFE99-1C5E-4750-97D5-AE5F908FA96B} = {68F1E9F0-21B8-4D5C-A57C-1DCEA8510CD6}
 		{B1BC954A-55C2-4FF7-AC1F-6C954CEFC7EB} = {F6594C9F-50F4-45B6-891A-FCA16D9448E3}
+		{333E0796-0838-4438-9C05-11E9733A85D7} = {AA90946E-89DD-453C-BA56-933123AF9883}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2AAC08D-C3E1-47A5-B5FA-4EB57D1DA8BC}

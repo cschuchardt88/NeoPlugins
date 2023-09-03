@@ -8,6 +8,8 @@
 // Redistribution and use in source and binary forms with or without
 // modifications are permitted.
 
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
@@ -31,6 +34,7 @@ using Neo.Plugins.RestServer.Swagger.Filters;
 using Neo.VM.Types;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using RestServer.Authentication;
 using System.Net.Mime;
 using System.Net.Security;
 using System.Numerics;
@@ -89,6 +93,10 @@ namespace Neo.Plugins.RestServer
                 })
                 .ConfigureServices(services =>
                 {
+                    if (_settings.EnableBasicAuthentication)
+                        services.AddAuthentication()
+                        .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("Basic", null);
+
                     // Server configuration
                     if (_settings.EnableCors)
                     {
@@ -132,6 +140,14 @@ namespace Neo.Plugins.RestServer
                         .AddControllers(options =>
                         {
                             options.EnableEndpointRouting = false;
+
+                            if (_settings.EnableBasicAuthentication)
+                            {
+                                var policy = new AuthorizationPolicyBuilder()
+                                                .RequireAuthenticatedUser()
+                                                .Build();
+                                options.Filters.Add(new AuthorizeFilter(policy));
+                            }
                         })
                         .ConfigureApiBehaviorOptions(options =>
                         {
@@ -167,6 +183,27 @@ namespace Neo.Plugins.RestServer
                     {
                         services.AddSwaggerGen(options =>
                         {
+                            options.UseOneOfForPolymorphism();
+                            options.SelectSubTypesUsing(baseType =>
+                            {
+                                if (baseType == typeof(WitnessCondition))
+                                {
+                                    return new[]
+                                    {
+                                        typeof(BooleanCondition),
+                                        typeof(NotCondition),
+                                        typeof(AndCondition),
+                                        typeof(OrCondition),
+                                        typeof(ScriptHashCondition),
+                                        typeof(GroupCondition),
+                                        typeof(CalledByEntryCondition),
+                                        typeof(CalledByContractCondition),
+                                        typeof(CalledByGroupCondition),
+                                    };
+                                }
+
+                                return Enumerable.Empty<Type>();
+                            });
                             options.SwaggerDoc("v1", new OpenApiInfo()
                             {
                                 Title = "RestServer Plugin API - V1",
@@ -253,6 +290,8 @@ namespace Neo.Plugins.RestServer
                 })
                 .Configure(app =>
                 {
+                    app.UseMiddleware<RestServerMiddleware>();
+
                     if (_settings.EnableForwardedHeaders)
                         app.UseForwardedHeaders();
 
@@ -264,7 +303,6 @@ namespace Neo.Plugins.RestServer
                     if (_settings.EnableCompression)
                         app.UseResponseCompression();
 
-                    app.UseMiddleware<RestServerMiddleware>();
 
                     app.UseExceptionHandler(config =>
                         config.Run(async context =>
@@ -285,8 +323,9 @@ namespace Neo.Plugins.RestServer
 
                     if (_settings.EnableSwagger)
                     {
-                        app.UseSwagger(options => options.SerializeAsV2 = true);
-                        app.UseSwaggerUI(options => options.DefaultModelsExpandDepth(-1));
+                        app.UseSwagger();
+                        //app.UseSwaggerUI(options => options.DefaultModelsExpandDepth(-1));
+                        app.UseSwaggerUI();
                     }
 
                     app.UseMvc();
