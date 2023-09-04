@@ -8,13 +8,14 @@
 // Redistribution and use in source and binary forms with or without
 // modifications are permitted.
 
-using System;
-
-namespace Neo.Plugins.Example.Exceptions
+namespace RestServer.Tests
 {
-    internal class CustomException : Exception
+    public class UnitTest1
     {
-        public CustomException() { }
-        public CustomException(string message) : base(message) { }
+        [Fact]
+        public void Test1()
+        {
+
+        }
     }
 }
