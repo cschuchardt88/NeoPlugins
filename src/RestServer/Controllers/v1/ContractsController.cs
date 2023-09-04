@@ -21,13 +21,13 @@ using Neo.SmartContract.Manifest;
 using Neo.SmartContract.Native;
 using System.Net.Mime;
 
-namespace Neo.Plugins.RestServer.Controllers
+namespace Neo.Plugins.RestServer.Controllers.v1
 {
-    [Route("/api/v1/contracts")]
+    [Route("/api/v{version:apiVersion}/contracts")]
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorModel))]
-    [ApiExplorerSettings(GroupName = "v1")]
+    [ApiVersion("1.0")]
     [ApiController]
     public class ContractsController : ControllerBase
     {

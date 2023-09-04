@@ -88,7 +88,7 @@ namespace Neo.Plugins.RestServer.Newtonsoft.Json
             throw new NotSupportedException($"WitnessConditionType({type}) is not supported from JSON.");
         }
 
-        public static bool EqualsIgnoreCase(string left, string right) =>
+        private static bool EqualsIgnoreCase(string left, string right) =>
             left.Equals(right, StringComparison.InvariantCultureIgnoreCase);
     }
 }

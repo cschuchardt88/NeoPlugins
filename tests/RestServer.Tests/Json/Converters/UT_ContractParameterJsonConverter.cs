@@ -13,10 +13,17 @@ using Neo.Plugins.RestServer;
 using Neo.SmartContract;
 using Newtonsoft.Json;
 
-namespace RestServer.Tests
+namespace RestServer.Tests.Json.Converters
 {
     public class UT_ContractParameterJsonConverter
     {
+        private readonly JsonSerializerSettings jsonSettings;
+
+        public UT_ContractParameterJsonConverter()
+        {
+            jsonSettings = RestServerSettings.Default.JsonSerializerSettings;
+        }
+
         [Fact]
         public void Test_ContractParameter_Write_JsonConverter()
         {
@@ -26,7 +33,7 @@ namespace RestServer.Tests
                 Value = UInt160.Zero,
             };
 
-            var json = JsonConvert.SerializeObject(cp, RestServerSettings.Default.JsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(cp, jsonSettings);
 
             Assert.NotNull(json);
             Assert.NotEmpty(json);

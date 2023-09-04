@@ -19,13 +19,13 @@ using Neo.Plugins.RestServer.Models.Error;
 using Neo.Plugins.RestServer.Models.Blockchain;
 using Neo.Plugins.RestServer.Models.Ledger;
 
-namespace Neo.Plugins.RestServer.Controllers
+namespace Neo.Plugins.RestServer.Controllers.v1
 {
-    [Route("/api/v1/ledger")]
+    [Route("/api/v{version:apiVersion}/ledger")]
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorModel))]
-    [ApiExplorerSettings(GroupName = "v1")]
+    [ApiVersion("1.0")]
     [ApiController]
     public class LedgerController : ControllerBase
     {
@@ -92,7 +92,7 @@ namespace Neo.Plugins.RestServer.Controllers
                 throw new InvalidParameterRangeException();
             //var start = (skip - 1) * take + startIndex;
             //var end = start + take;
-            var start = NativeContract.Ledger.CurrentIndex(_neosystem.StoreView) - ((skip - 1) * take);
+            var start = NativeContract.Ledger.CurrentIndex(_neosystem.StoreView) - (skip - 1) * take;
             var end = start - take;
             var lstOfBlocks = new List<Header>();
             for (uint i = start; i > end; i--)

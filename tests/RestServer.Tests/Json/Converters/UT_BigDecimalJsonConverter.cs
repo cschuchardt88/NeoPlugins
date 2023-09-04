@@ -13,17 +13,24 @@ using Neo.Plugins.RestServer;
 using Newtonsoft.Json;
 using System.Numerics;
 
-namespace RestServer.Tests
+namespace RestServer.Tests.Json.Converters
 {
     public class UT_BigDecimalJsonConverter
     {
+        private readonly JsonSerializerSettings jsonSettings;
+
+        public UT_BigDecimalJsonConverter()
+        {
+            jsonSettings = RestServerSettings.Default.JsonSerializerSettings;
+        }
+
         [Fact]
         public void Test_BigDecimal_Write_And_Read_JsonConverter()
         {
             BigDecimal bd = new((BigInteger)0_10000000, 8);
 
-            var json = JsonConvert.SerializeObject(bd, RestServerSettings.Default.JsonSerializerSettings);
-            var bgObject = JsonConvert.DeserializeObject<BigDecimal>(json, RestServerSettings.Default.JsonSerializerSettings);
+            var json = JsonConvert.SerializeObject(bd, jsonSettings);
+            var bgObject = JsonConvert.DeserializeObject<BigDecimal>(json, jsonSettings);
 
             Assert.NotNull(json);
             Assert.NotEmpty(json);
