@@ -22,15 +22,13 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Neo.Cryptography.ECC;
-using Neo.Json;
 using Neo.Network.P2P.Payloads.Conditions;
+using Neo.Plugins.RestServer.Binder;
 using Neo.Plugins.RestServer.Middleware;
 using Neo.Plugins.RestServer.Models.Error;
 using Neo.Plugins.RestServer.Providers;
-using Neo.Plugins.RestServer.Swagger.Filters;
 using Neo.VM.Types;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -69,7 +67,7 @@ namespace Neo.Plugins.RestServer
                     // Web server configuration
                     options.AddServerHeader = false;
                     options.Limits.MaxConcurrentConnections = _settings.MaxConcurrentConnections;
-                    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(_settings.KeepAliveTimeout);
+                    options.Limits.KeepAliveTimeout = TimeSpan.FromSeconds(_settings.KeepAliveTimeout);
                     options.Limits.RequestHeadersTimeout = TimeSpan.FromSeconds(15);
                     options.Listen(_settings.BindAddress, unchecked((int)_settings.Port),
                         listenOptions =>
@@ -148,6 +146,7 @@ namespace Neo.Plugins.RestServer
                                                 .Build();
                                 options.Filters.Add(new AuthorizeFilter(policy));
                             }
+                            options.ModelBinderProviders.Insert(0, new NeoBinderProvider());
                         })
                         .ConfigureApiBehaviorOptions(options =>
                         {
@@ -172,6 +171,7 @@ namespace Neo.Plugins.RestServer
                         })
                         .AddNewtonsoftJson(options =>
                         {
+                            options.AllowInputFormatterExceptionMessages = true;
                             options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                             options.SerializerSettings.Formatting = Formatting.None;
 
@@ -207,8 +207,14 @@ namespace Neo.Plugins.RestServer
                             options.SwaggerDoc("v1", new OpenApiInfo()
                             {
                                 Title = "RestServer Plugin API - V1",
-                                Description = "REST Web Sevices for the node.",
+                                Description = "RESTful Web Sevices for neo-cli.",
                                 Version = "v1",
+                                Contact = new OpenApiContact()
+                                {
+                                    Name = "The Neo Project",
+                                    Url = new Uri("https://github.com/neo-project/neo-modules"),
+                                    Email = "dev@neo.org",
+                                },
                                 License = new OpenApiLicense()
                                 {
                                     Name = "MIT",
@@ -245,31 +251,6 @@ namespace Neo.Plugins.RestServer
                                 Type = "string",
                                 Format = "base64",
                             });
-                            options.MapType<JObject>(() => new OpenApiSchema()
-                            {
-                                Type = "object",
-                            });
-                            options.MapType<StackItem>(() => new OpenApiSchema()
-                            {
-                                Type = "object",
-                            });
-                            options.MapType<WitnessCondition>(() => new OpenApiSchema()
-                            {
-                                Type = "string",
-                                Enum =
-                                {
-                                    new OpenApiString("CalledByEntry"),
-                                    new OpenApiString("CalledByContract"),
-                                    new OpenApiString("CalledByGroup"),
-                                    new OpenApiString("Boolean"),
-                                    new OpenApiString("Not"),
-                                    new OpenApiString("And"),
-                                    new OpenApiString("Or"),
-                                    new OpenApiString("ScriptHash"),
-                                    new OpenApiString("Group"),
-                                }
-                            });
-                            options.SchemaFilter<SwaggerExcludeFilter>();
                             foreach (var plugin in Plugin.Plugins)
                             {
                                 var assemblyName = plugin.GetType().Assembly.GetName().Name;
