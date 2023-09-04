@@ -15,7 +15,7 @@ namespace RestServer.Tests
         [Fact]
         public void Test1()
         {
-            
+
         }
     }
 }
