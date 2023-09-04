@@ -33,12 +33,12 @@ A `Swagger` controller uses special attributes that are set on your controller's
 - `[ApiExplorerSettings(GroupName = "v1")]`
   - **GroupName** - _is which version of the API you are targeting._
 - `[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorModel))]` (_Required_)
-  - **Type** - _Must have a base class of [error](#error-model)._
+  - **Type** - _Must have a base class of [error](#error-class)._
 
 ## Error Class
 Needs to be the same as `RestServer` of else there will be some inconsistencies
 with end users not knowing which type to use. This class can be `public` or `internal`.
-Properties `Code`, `Name` and `Message` can be whatever you desire.
+Properties `Code`, `Name` and `Message` values can be whatever you desire.
 
 **Model**
 ```csharp
@@ -53,13 +53,12 @@ public class ErrorModel
 ## Controller Actions
 Controller actions need to have special attributes as well as code comments.
 
-**Required Attributes**
 - `[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]`
 
-You can use more than one attribute. One per HTTP status code.
+HTTP status code `200 (OK)` is required with return type defined. You can use more than one attribute. One per HTTP status code.
 
 ### Action Example
-```charp
+```csharp
 [HttpGet("contracts/{hash:required}/sayHello", Name = "GetSayHello")]
 [ProducesResponseType(StatusCodes.Status204NoContent)]
 [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]

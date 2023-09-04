@@ -1,6 +1,8 @@
 ## RestServer
 In this section you will learn about `RestServer` plugin and how it works.
 
+See [config.json](ConfigFile.md) for information about the configurations.
+
 ## Dependencies
 - **Microsoft.AspNetCore.JsonPatch.dll** `Required`
 - **Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll** `Required`
@@ -19,7 +21,7 @@ These files go in the same directory as the `RestServer.dll`. In neo-cli
 | :---: | --- | :--- |
 |**server**|_neo-cli/3.6.0 RestServer/3.6.0_|_`neo-cli` and `RestServer` version._|
 
-Custom headers can be added by [Neo RestServer Plugins](/docs/Addons.md).
+Custom headers can be added by [Neo RestServer Plugins](Addons.md).
 
 ## JSON Serializer
 `RestServer` uses custom Newtonsoft Json Converters to serialize controller action
@@ -62,6 +64,15 @@ responses and `route` parameters.
 - `Neo.VM.Types.Struct`
 
 ## Remote Endpoints
+Parametes `{hash}` can be any Neo N3 address or scripthash; `{address}` can be any Neo N3 address **only**; `{number}` and `{index}` can be any _**uint32**_.
+
+**Parameter Examples**
+- `{hash}` - _0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5_ **or** _NiHURyS83nX2mpxtA7xq84cGxVbHojj5Wc_
+- `{address}` - _NiHURyS83nX2mpxtA7xq84cGxVbHojj5Wc_
+- `{number}` - _1_
+- `{index}` - _2500000_
+
+**Paths**
 - Utils
   - `[GET]` `/api/v1/utils/{hash}/address`
   - `[GET]` `/api/v1/utils/{address}/scripthash`

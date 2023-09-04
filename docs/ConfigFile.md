@@ -5,9 +5,9 @@
 |**Network**|_uint32_|_Network you would like the `RestServer` to be enabled on._|
 |**BindAddress**|_string_|_Ip address of the interface you want to bind too._|
 |**Port**|_uint32_|_Port number to bind too._|
-|**KeepAliveTimeout**|_uint32_|_Time to keep the request alive, in mintues._|
+|**KeepAliveTimeout**|_uint32_|_Time to keep the request alive, in seconds._|
 |**SslCertFile**|_string_|_Is the path and file name of a certificate file, relative to the directory that contains the node's executable files._|
-|**SslCertPassword**|_string_|_Is the password required to access the X.509 certificate data._|
+|**SslCertPassword**|_string_|_Is the password required to access the `X.509` certificate data._|
 |**TrustedAuthorities**|_StringArray_|_Tumbprints of the of the last certificate authority in the chain._|
 |**EnableBasicAuthentication**|_boolean_|_enables basic authentication._|
 |**RestUser**|_string_|_Basic authentication's `username`._|
@@ -20,10 +20,10 @@
 |**EnableForwardedHeaders**|_boolean_|_Enables response/request headers for proxy forwarding. (data center usage)_|
 |**EnableSwagger**|_boolean_|_Enables `Swagger` with `Swagger UI` for the rest services._|
 |**MaxPageSize**|_uint32_|_Max page size for searches on `Ledger`/`Contracts` route._|
-|**MaxConcurrentConnections**|_long64_|_Max allow concurrent HTTP connections._|
-|**MaxTransactionFee**|_long64_|_Max transaction fee for `wallet` transfers._|
-|**MaxInvokeGas**|_long64_|_Max gas to be invoked on the `Neo` virtual machine._|
-|**WalletTimeout**|_int32_|_When `wallet` session expires, in minutes._|
+|**MaxConcurrentConnections**|_int64_|_Max allow concurrent HTTP connections._|
+|**MaxTransactionFee**|_int64_|_Max transaction fee for `wallet` transfers._|
+|**MaxInvokeGas**|_int64_|_Max gas to be invoked on the `Neo` virtual machine._|
+|**WalletSessionTimeout**|_uint32_|_When `wallet` session expires, in seconds._|
 
 ## Default "Config.json" file
 ```json
@@ -32,7 +32,7 @@
     "Network": 860833102,
     "BindAddress": "127.0.0.1",
     "Port": 10339,
-    "KeepAliveTimeout": 2,
+    "KeepAliveTimeout": 120,
     "SslCertFile": "",
     "SslCertPassword": "",
     "TrustedAuthorities": [],
@@ -50,7 +50,7 @@
     "MaxConcurrentConnections": 40,
     "MaxTransactionFee": 10000000,
     "MaxInvokeGas": 20000000,
-    "WalletTimeout": 2
+    "WalletSessionTimeout": 120
   }
 }
 ```
