@@ -55,16 +55,16 @@ namespace Neo.Plugins.RestServer
                 var typeProp = props.SingleOrDefault(s => s.Name.Equals("type", StringComparison.InvariantCultureIgnoreCase));
                 var valueProp = props.SingleOrDefault(s => s.Name.Equals("value", StringComparison.InvariantCultureIgnoreCase));
 
-                if (typeProp != null && valueProp != null)
+                if (typeProp != null)
                 {
                     StackItem s = StackItem.Null;
-                    var type = Enum.Parse<StackItemType>(typeProp.Value<string>(), true);
+                    var type = Enum.Parse<StackItemType>(typeProp.ToObject<string>(), true);
                     var value = valueProp.Value;
 
                     switch (type)
                     {
                         case StackItemType.Struct:
-                            if (valueProp.Type == JTokenType.Array)
+                            if (value.Type == JTokenType.Array)
                             {
                                 var st = new Struct();
                                 foreach (var item in (JArray)value)
@@ -73,7 +73,7 @@ namespace Neo.Plugins.RestServer
                             }
                             break;
                         case StackItemType.Array:
-                            if (valueProp.Type == JTokenType.Array)
+                            if (value.Type == JTokenType.Array)
                             {
                                 var a = new Array();
                                 foreach (var item in (JArray)value)
@@ -82,7 +82,7 @@ namespace Neo.Plugins.RestServer
                             }
                             break;
                         case StackItemType.Map:
-                            if (valueProp.Type == JTokenType.Array)
+                            if (value.Type == JTokenType.Array)
                             {
                                 var m = new Map();
                                 foreach (var item in (JArray)value)
@@ -94,8 +94,8 @@ namespace Neo.Plugins.RestServer
                                     var keyValueProps = vprops.SingleOrDefault(s => s.Name.Equals("value", StringComparison.InvariantCultureIgnoreCase));
                                     if (keyProps == null && keyValueProps == null)
                                         continue;
-                                    var key = (PrimitiveType)StackItemFromJToken(keyProps);
-                                    m[key] = StackItemFromJToken(keyValueProps);
+                                    var key = (PrimitiveType)StackItemFromJToken(keyProps?.Value);
+                                    m[key] = StackItemFromJToken(keyValueProps?.Value);
                                 }
                                 s = m;
                             }
@@ -160,7 +160,7 @@ namespace Neo.Plugins.RestServer
                         o = JToken.FromObject(new
                         {
                             Type = StackItemType.Array.ToString(),
-                            Value = JArray.FromObject(a),
+                            Value = JArray.FromObject(a, serializer),
                         }, serializer);
                     }
                     break;
@@ -172,11 +172,14 @@ namespace Neo.Plugins.RestServer
                     if (o is null)
                     {
                         context.Add((item, o));
-                        var kvp = map.Select(s => new KeyValuePair<JToken, JToken>(StackItemToJToken(s.Key, context, serializer), StackItemToJToken(s.Value, context, serializer)));
+                        var kvp = map.Select(s =>
+                            new KeyValuePair<JToken, JToken>(
+                                StackItemToJToken(s.Key, context, serializer),
+                                StackItemToJToken(s.Value, context, serializer)));
                         o = JToken.FromObject(new
                         {
                             Type = StackItemType.Map.ToString(),
-                            Value = JArray.FromObject(kvp),
+                            Value = JArray.FromObject(kvp, serializer),
                         }, serializer);
                     }
                     break;
@@ -223,10 +226,11 @@ namespace Neo.Plugins.RestServer
                     }, serializer);
                     break;
                 case Null:
+                case null:
                     o = JToken.FromObject(new
                     {
                         Type = StackItemType.Any.ToString(),
-                        Value = JObject.FromObject(null),
+                        Value = (object)null,
                     }, serializer);
                     break;
                 default:
