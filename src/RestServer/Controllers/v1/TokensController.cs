@@ -10,15 +10,15 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Neo.Plugins.RestServer.Exceptions;
+using Neo.Plugins.RestServer.Extensions;
+using Neo.Plugins.RestServer.Helpers;
+using Neo.Plugins.RestServer.Models;
+using Neo.Plugins.RestServer.Models.Error;
 using Neo.Plugins.RestServer.Models.Token;
 using Neo.Plugins.RestServer.Tokens;
 using Neo.SmartContract.Native;
-using Neo.Plugins.RestServer.Helpers;
-using Neo.Plugins.RestServer.Extensions;
-using Neo.Plugins.RestServer.Exceptions;
 using System.Net.Mime;
-using Neo.Plugins.RestServer.Models.Error;
-using Neo.Plugins.RestServer.Models;
 
 namespace Neo.Plugins.RestServer.Controllers.v1
 {
@@ -65,7 +65,8 @@ namespace Neo.Plugins.RestServer.Controllers.v1
                 .OrderBy(o => o.Manifest.Name)
                 .Skip((skip - 1) * take)
                 .Take(take);
-            if (vaildContracts.Any() == false) return NoContent();
+            if (vaildContracts.Any() == false)
+                return NoContent();
             var listResults = new List<NEP17TokenModel>();
             foreach (var contract in vaildContracts)
             {
@@ -78,7 +79,8 @@ namespace Neo.Plugins.RestServer.Controllers.v1
                 {
                 }
             }
-            if (listResults.Any() == false) return NoContent();
+            if (listResults.Any() == false)
+                return NoContent();
             return Ok(listResults);
         }
 
@@ -168,7 +170,8 @@ namespace Neo.Plugins.RestServer.Controllers.v1
             .OrderBy(o => o.Manifest.Name)
                 .Skip((skip - 1) * take)
                 .Take(take);
-            if (vaildContracts.Any() == false) return NoContent();
+            if (vaildContracts.Any() == false)
+                return NoContent();
             var listResults = new List<NEP11TokenModel>();
             foreach (var contract in vaildContracts)
             {
@@ -181,7 +184,8 @@ namespace Neo.Plugins.RestServer.Controllers.v1
                 {
                 }
             }
-            if (listResults.Any() == false) return NoContent();
+            if (listResults.Any() == false)
+                return NoContent();
             return Ok(listResults);
         }
 
@@ -264,7 +268,8 @@ namespace Neo.Plugins.RestServer.Controllers.v1
                 {
                     var token = new NEP17Token(_neosystem, contract.Hash);
                     var balance = token.BalanceOf(addressOrScripthash).Value;
-                    if (balance == 0) continue;
+                    if (balance == 0)
+                        continue;
                     listResults.Add(new()
                     {
                         Name = token.Name,
@@ -277,7 +282,8 @@ namespace Neo.Plugins.RestServer.Controllers.v1
 
                     var nft = new NEP11Token(_neosystem, contract.Hash);
                     balance = nft.BalanceOf(addressOrScripthash).Value;
-                    if (balance == 0) continue;
+                    if (balance == 0)
+                        continue;
                     listResults.Add(new()
                     {
                         Name = nft.Name,

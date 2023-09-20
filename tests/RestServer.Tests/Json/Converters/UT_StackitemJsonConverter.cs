@@ -8,15 +8,15 @@
 // Redistribution and use in source and binary forms with or without
 // modifications are permitted.
 
-using Buffer = Neo.VM.Types.Buffer;
-using Array = Neo.VM.Types.Array;
-using Pointer = Neo.VM.Types.Pointer;
-using Struct = Neo.VM.Types.Struct;
-using StackItem = Neo.VM.Types.StackItem;
-using Map = Neo.VM.Types.Map;
+using Neo.Plugins.RestServer;
 using Neo.VM;
 using Newtonsoft.Json;
-using Neo.Plugins.RestServer;
+using Array = Neo.VM.Types.Array;
+using Buffer = Neo.VM.Types.Buffer;
+using Map = Neo.VM.Types.Map;
+using Pointer = Neo.VM.Types.Pointer;
+using StackItem = Neo.VM.Types.StackItem;
+using Struct = Neo.VM.Types.Struct;
 
 namespace RestServer.Tests.Json.Converters
 {

@@ -10,7 +10,6 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 using System.Numerics;
 
 namespace Neo.Plugins.RestServer.Newtonsoft.Json

@@ -8,20 +8,19 @@
 // Redistribution and use in source and binary forms with or without
 // modifications are permitted.
 
+using Neo.Cryptography.ECC;
+using Neo.SmartContract;
 using Neo.VM.Types;
+using Neo.Wallets;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System.Numerics;
 using Array = Neo.VM.Types.Array;
 using Boolean = Neo.VM.Types.Boolean;
 using Buffer = Neo.VM.Types.Buffer;
-using Neo.Wallets;
-using Neo.SmartContract;
-using Neo.Cryptography.ECC;
 
 namespace Neo.Plugins.RestServer
 {
-    internal static class RestServerUtility
+    public static partial class RestServerUtility
     {
         public static UInt160 ConvertToScriptHash(string address, ProtocolSettings settings)
         {
@@ -230,7 +229,7 @@ namespace Neo.Plugins.RestServer
                     o = JToken.FromObject(new
                     {
                         Type = StackItemType.Any.ToString(),
-                        Value = (object)null,
+                        Value = JValue.CreateNull(),
                     }, serializer);
                     break;
                 default:

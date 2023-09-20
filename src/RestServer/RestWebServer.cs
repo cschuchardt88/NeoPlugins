@@ -59,7 +59,8 @@ namespace Neo.Plugins.RestServer
 
         public void Start()
         {
-            if (IsRunning) return;
+            if (IsRunning)
+                return;
 
             IsRunning = true;
 
@@ -74,7 +75,8 @@ namespace Neo.Plugins.RestServer
                     options.Listen(_settings.BindAddress, unchecked((int)_settings.Port),
                         listenOptions =>
                         {
-                            if (string.IsNullOrEmpty(_settings.SslCertFile)) return;
+                            if (string.IsNullOrEmpty(_settings.SslCertFile))
+                                return;
                             listenOptions.UseHttps(_settings.SslCertFile, _settings.SslCertPassword, httpsOptions =>
                             {
                                 if (_settings.TrustedAuthorities.Length == 0)
@@ -372,6 +374,8 @@ namespace Neo.Plugins.RestServer
                     if (_settings.EnableCompression)
                         app.UseResponseCompression();
 
+                    if (_settings.EnableBasicAuthentication)
+                        app.UseAuthentication();
 
                     app.UseExceptionHandler(config =>
                         config.Run(async context =>
